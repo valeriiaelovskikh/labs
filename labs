@@ -1,0 +1,131 @@
+#лаба1
+#1 
+x = [1, 3, 5, 6, 7, 4]
+print (x[0], x[2], x[-2])
+
+#2
+a = [1, 2, 3, 4, 5, 6]
+n = 28
+
+def stepen (a, n):
+    if n > len(a):
+        return ('все плохо')
+    else:
+        return a[n]**n
+
+print (stepen (a, n))
+
+#лаба2
+#4
+def summa(x): 
+    a = []
+    for i in x:
+        if isinstance(i, list):
+            try: #программа ругается, конструкция try-except как раз-таки спасает от этого
+                b = sum(i)
+                a.append(b)
+            except TypeError:
+                listik = [flatten(i)] #делаем один подсписок, чтобы не ругалось
+                a.extend(summa(listik)) #повторное суммирование
+        else:
+            a.append(i)
+    return a
+
+def flatten(x): #код из прошлой лабы
+    a = []
+    for i in x:
+        if isinstance(i, list):
+            a.extend(flatten(i))
+        else:
+            a.append(i)
+    return a
+
+print (flatten(l))
+print(summa(l))
+
+#6
+def zabor(x):
+    x = '' #сюда будет записываться результат
+    for i in range (len(s)):
+        if i % 2 == 0: #благодаря этому условию чередуем буквы, создавая ЗаБоРчИк
+            x += s[i].upper() #делает большую букву
+        else:
+            x += s[i].lower() #делает маленькую букву
+    return x
+
+s = 'я приду к тебе с клубникой в декабре'
+print(zabor(s))
+
+#8
+def create_mat(n):
+    matrix = [[0] * n for i in range(n)] #создаем матрицу n x n с нулями
+    for i in range(n):  #заполняем первую строку и первый столбец
+        matrix[0][i] = 1 #элемент матрицы и его индекс
+        matrix[i][0] = 1
+    for i in range(1, n):  #заполняем оставшуюся часть 
+        for j in range(1, n):
+            matrix[i][j] = matrix[i - 1][j] + matrix[i][j - 1]  #значение текущей ячейки равно сумме верхней и левой ячеек
+    return matrix
+
+def pechat_mat(n):
+    matrix = create_mat(n)
+    for i in range(n):  #выводим нашу матрицу на экран
+        for j in range(n):
+            print(matrix[i][j], end=' ')  #запись, чтобы красиво выводилось
+        print()  # перенос строки
+pechat_mat(4)
+
+#9
+def sum_of_numbers(x):
+
+    result = '' #переменная для хранения чисел и пробелов
+    for i in x:
+        if i.isdigit() or i.isspace(): #если наш символ цифра или пробел, то добавляем
+            result += i
+        else:
+            continue
+
+    result = result.strip() #очищаем полученную строку от пробелов
+    numbers_list = [int(num) for num in result.split() if num.isdigit()] #преобразуем строку чисел в список чисел
+    numbers_sum = sum(numbers_list)
+
+    return numbers_sum
+
+x = "19коров и кита3 выш33ло в поле 1"
+result = sum_of_numbers(x)
+print(result)
+
+#лаба3
+#8
+def max_length(x):
+    x = x.lower()  #не учитываем регистр
+    maximum = 0  #максимальная длина
+    current = 1  #текущая длина
+
+    for i in range(1, len(x)):  # проходимся по символам в строке, начиная со второго символа если текущий символ равен предыдущему, увеличиваем текущую длину последовательности на 1
+        if x[i] == x[i - 1] and x.isalpha(): 
+            current += 1
+        else: #если текущая длина последовательности больше максимальной, обновляем
+            if current > maximum:
+                maximum = current
+            обнуляем
+            current = 1
+            
+    if current > maximum: #является ли текущая длина последовательности больше максимальной
+        maximum = current
+    
+    return maximum
+    
+#лаба4
+#6
+def __make_deal(self, house, discount):
+        self.__money -= house.final_price(discount)
+        self.__house = house
+        
+# 8        
+def buy_house(self, house, discount): 
+        if self.__money >= house.final_price(discount):
+            self.__make_deal(house, discount)
+            print('Successfully')
+        else:
+            print('Insufficient funds')
